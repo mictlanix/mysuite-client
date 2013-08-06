@@ -16,10 +16,10 @@ namespace Mictlanix.MySuite.Client.Test
 			MySuiteClient cli;
 
 			cli = new MySuiteClient ("12211111-1111-1111-1111-111111111111",
-			                         "AAA010101AAA", "FISCALDOM", MySuiteCountryCode.MX,
-			                         MySuiteClient.DEVELOPMENT_URL);
+			                         "AAA010101AAA", "FISCALDOM", MySuiteClient.DEVELOPMENT_URL);
 
-			TestCreate (cli);
+			TestStamp (cli);
+			//TestCreate (cli);
 			//TestGet(cli);
 			//TestSearch(cli);
 			//TestCancel(cli);
@@ -28,36 +28,44 @@ namespace Mictlanix.MySuite.Client.Test
 		}
 
 		// CONVERT_NATIVE_XM
+		public static void TestStamp (MySuiteClient cli)
+		{
+			var result = cli.Stamp (CreateDoc ());
+			Console.WriteLine ("{0}", result.ToXmlString ());
+		}
+
+		// CONVERT_NATIVE_XM
 		public static void TestCreate (MySuiteClient cli)
 		{
-			MySuiteDocId result;
+			MySuiteResult result;
 
-			result = cli.CreateDocument (CFDAsObject (), MySuiteOutputFormat.XML | MySuiteOutputFormat.PDF);
+			result = cli.CreateDocument (CreateDoc ());
 			Console.WriteLine ("Result: {0}, {1}, {2}", result.Batch, result.Serial, result.Date);
-			cli.SaveFile(string.Format("CFD-{0}-{1}", result.Batch, result.Serial), MySuiteOutputFormat.XML | MySuiteOutputFormat.PDF);
+			Console.WriteLine ();
+			Console.WriteLine (cli.GetData ());
 		}
 
 		// GET_DOCUMENT
 		public static void TestGet (MySuiteClient cli)
 		{
-			MySuiteDocId result;
+			MySuiteResult result;
 
-			result = cli.GetDocument("FISCALDOM", "55963", MySuiteOutputFormat.XML);
+			result = cli.GetDocument("FISCALDOM", "55963");
 			Console.WriteLine("Result: {0}, {1}, {2}", result.Batch, result.Serial, result.Date);
-			cli.SaveFile(string.Format("CFD-{0}-{1}", result.Batch, result.Serial), MySuiteOutputFormat.XML);
+			//cli.SaveFile(string.Format("CFD-{0}-{1}", result.Batch, result.Serial), MySuiteOutputFormat.XML);
 		}
 
 		// CANCEL_XML
 		public static void TestCancel (MySuiteClient cli)
 		{
-			MySuiteDocId result;
+			MySuiteResult result;
 
 			result = cli.CancelDocument ("A", "4");
 
 			Console.WriteLine ("Result: {0}, {1}, {2}", result.Batch, result.Serial, result.Date);
 		}
 		
-		public static TFactDocMX CFDAsObject()
+		public static TFactDocMX CreateDoc ()
 		{
 			TFactDocMX obj = new TFactDocMX();
 
@@ -102,10 +110,7 @@ namespace Mictlanix.MySuite.Client.Test
 								Tasa = 16m,
 								Monto = new TNonNegativeAmount { Value =  11.586207m }
                             }
-                        },
-                        FechaDeCaducidad = new DateTime(2011, 12, 31),
-                        FechaDeCaducidadSpecified = true,
-                        NumeroDeLote = "LOTE123"
+                        }
                     }
                 }
             };
@@ -145,15 +150,8 @@ namespace Mictlanix.MySuite.Client.Test
                 FormaDePago = "PAGO EN UNA SOLA EXHIBICION"
             };
 
-			obj.ComprobanteEx = new TComprobanteEx
-			{
-				/*DatosDeNegocio = new TComprobanteExDatosDeNegocio {
-					Sucursal = "FISCALDOM"
-				},*/
-				TerminosDePago = new TComprobanteExTerminosDePago
-				{
-					//MedioDePago = "Efectivo",
-					//CondicionesDePago = "CONTADO",
+			obj.ComprobanteEx = new TComprobanteEx {
+				TerminosDePago = new TComprobanteExTerminosDePago {
 					MetodoDePago = "Efectivo"
 				}
 			};

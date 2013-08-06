@@ -34,6 +34,7 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -42,11 +43,16 @@
     <Compile Include="MySuiteWSClient.cs" />
     <Compile Include="Data\FxSchemas.cs" />
     <Compile Include="Data\MySuiteDocId.cs" />
-    <Compile Include="Data\SearchCriteria.cs" />
-    <Compile Include="Data\TFactDocMX.cs" />
+    <Compile Include="Data\TFactDocMX.Custom.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cfdlib\Mictlanix.CFDLib.csproj">
+      <Project>{63EBACD8-7BB0-480F-81BF-5E0690B27112}</Project>
+      <Name>Mictlanix.CFDLib</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

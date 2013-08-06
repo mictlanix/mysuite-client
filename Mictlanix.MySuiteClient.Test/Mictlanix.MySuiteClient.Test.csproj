@@ -47,5 +47,9 @@
       <Project>{A58E0C8F-E086-4032-B724-1F3B3D6F74FF}</Project>
       <Name>Mictlanix.MySuiteClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\cfdlib\Mictlanix.CFDLib.csproj">
+      <Project>{63EBACD8-7BB0-480F-81BF-5E0690B27112}</Project>
+      <Name>Mictlanix.CFDLib</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
